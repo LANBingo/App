@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+        <TableLayout
+            android:layout_width="410dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/sheet_background" >
+
+            <TableRow
+                android:id="@+id/trLine1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_weight="1">
+
+                <ToggleButton
+                    android:id="@+id/tgCell1"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg"/>
+
+                <ToggleButton
+                    android:id="@+id/tgCell2"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg"/>
+
+                <ToggleButton
+                    android:id="@+id/tgCell3"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg"/>
+
+                <ToggleButton
+                    android:id="@+id/tgCell4"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg"/>
+
+                <ToggleButton
+                    android:id="@+id/tgCell5"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg"/>
+
+                <ToggleButton
+                    android:id="@+id/tgCell6"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg"/>
+
+                <ToggleButton
+                    android:id="@+id/tgCell7"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg"/>
+
+                <ToggleButton
+                    android:id="@+id/tgCell8"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg"/>
+
+                <ToggleButton
+                    android:id="@+id/tgCell9"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trLine2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="30dp"
+                android:layout_weight="1">
+
+                <ToggleButton
+                    android:id="@+id/tgCell10"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell11"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell12"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell13"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell14"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell15"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell16"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell17"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell18"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trLine3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="42dp"
+                android:layout_weight="1">
+
+                <ToggleButton
+                    android:id="@+id/tgCell19"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell20"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell21"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell22"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell23"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell24"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell25"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell26"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+                <ToggleButton
+                    android:id="@+id/tgCell27"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOn=""
+                    android:textOff=""
+                    android:background="@drawable/ic_tg01_bg" />
+
+            </TableRow>
+        </TableLayout>
+
+    <Button
+        android:id="@+id/btCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="168dp"
+        android:layout_marginStart="162dp"
+        android:backgroundTint="#3F51B5"
+        android:textSize="16sp"
+        app:cornerRadius="16dp"
+        tools:text="@string/bingo" />
+
+</androidx.cardview.widget.CardView>

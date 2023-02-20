@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">LANBingo</string>
+    <string name="carton">Carton</string>
+    <string name="linea">LINEA</string>
+    <string name="bingo">BINGO</string>
+    <string name="bingo90">Jugar Bingo 90</string>
+    <string name="bingo75">Jugar Bingo 75</string>
+    <string name="nCartones">Número de Cartones: %d</string>
+    <string name="userName">Nombre</string>
+    <string name="loading">Cargando…</string>
+    <string name="checking">Comprobando…</string>
+    <string name="status">Status</string>
+</resources>
