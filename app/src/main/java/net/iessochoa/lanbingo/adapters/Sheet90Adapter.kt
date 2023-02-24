@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ToggleButton
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
+import net.iessochoa.lanbingo.GameActivity.Companion.bingo
 import net.iessochoa.lanbingo.R
 import net.iessochoa.lanbingo.databinding.Bingo90sheetBinding
 
@@ -15,13 +16,11 @@ import net.iessochoa.lanbingo.databinding.Bingo90sheetBinding
 // Implementación de los metodos e Inicializadores por Juan Antonio Nicolás
 class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) : RecyclerView.Adapter<Sheet90Adapter.SheetViewHolder> () {
 
-    //
+    //Una lista que contiene todos los cartones del jugador
     private val sheetList:List<List<IntArray>> = sheets
-    //
+    //Una lista que contiene el estado de todos los cartones del jugador, para evitar pérdidas de info.
     private val statusList:List<BooleanArray> = status
-    //
-    private var bingo = false
-    //
+    //Objeto que hace referencia a la interfaz ubicada más abajo, en esta misma clase.
     lateinit var onCallListener:OnCallListener
 
     inner class SheetViewHolder(val binding: Bingo90sheetBinding)
@@ -194,13 +193,15 @@ class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) :
                     if(!bingo){
                         if(onCallListener.sendLineForCheck(this, findLine(pos))) {
                             bingo = true
+                            binding.btCall.setText(R.string.bingo)
                             it.visibility = View.INVISIBLE
                         }
+                    } else {
+                        onCallListener.sendBingoForCheck(this)
                     }
-                    onCallListener.sendBingoForCheck(this)
                 }
             }
-            /*Cogemos la lista de estados y la aplicamos a los ToggleButton. De est manera,
+            /*Cogemos la lista de estados y la aplicamos a los ToggleButton. De esta manera,
             evitaremos que los cartones se reinicien cada vez que giremos la pantalla.*/
             with(statusList[pos]){
                 binding.tgCell1.isChecked = get(0)
@@ -318,9 +319,11 @@ class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) :
         return 0
     }
 
+    /*Interfaz creada para poder enviar al servidor, a través de 2 métodos distintos, listas
+    de integer que deben comprobarse.*/
     interface OnCallListener{
         fun sendLineForCheck(carton:List<IntArray>, line:Int): Boolean
 
-        fun sendBingoForCheck(carton: List<IntArray>)
+        fun sendBingoForCheck(carton: List<IntArray>): Boolean
     }
 }

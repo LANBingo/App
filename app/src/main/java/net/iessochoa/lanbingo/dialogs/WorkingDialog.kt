@@ -8,16 +8,24 @@ import android.widget.TextView
 import com.airbnb.lottie.LottieAnimationView
 import com.airbnb.lottie.LottieDrawable
 import net.iessochoa.lanbingo.R
-
+//Clase creada para mostrar animaciones de espera y verificación al usuario para hacer la app
+//más vistosa.
+//Creada por Juan Antonio Nicolás
 class WorkingDialog(private val context: Context) {
 
-    private lateinit var dialog: Dialog
+    private var dialog: Dialog
 
-    fun showLoadingDialog(){
+    init {
         dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_loading)
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
 
+    fun changeContext(context: Context){
+        dialog = Dialog(context)
+    }
+
+    fun showLoadingDialog(){
         val tvLoading: TextView = dialog.findViewById(R.id.tvMessage)
         tvLoading.setText(R.string.loading)
         tvLoading.textSize = 16F
@@ -28,8 +36,15 @@ class WorkingDialog(private val context: Context) {
         pavIcon.scaleX = 2.5F
         pavIcon.scaleY = 2.5F
 
-        dialog.create()
-        dialog.show()
+        initDialog()
+    }
+
+    fun showGeneratingDialog(){
+
+    }
+
+    fun showWaitDialog(){
+
     }
 
     fun showCheckingDialog(){
@@ -45,8 +60,7 @@ class WorkingDialog(private val context: Context) {
         pavIcon.setAnimation(R.raw.checking)
         pavIcon.repeatCount = LottieDrawable.INFINITE
 
-        dialog.create()
-        dialog.show()
+        initDialog()
     }
 
     fun showCorrectDialog(title: String){
@@ -63,6 +77,28 @@ class WorkingDialog(private val context: Context) {
         pavIcon.scaleX = 1.3F
         pavIcon.scaleY = 1.3F
 
+        initDialog()
+    }
+
+    fun showWrongDialog(title: String){
+        dialog = Dialog(context)
+        dialog.setContentView(R.layout.dialog_loading)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val tvLoading: TextView = dialog.findViewById(R.id.tvMessage)
+        tvLoading.text = title
+        tvLoading.textSize = 14F
+
+        val pavIcon: LottieAnimationView = dialog.findViewById(R.id.pavIcon)
+        pavIcon.setAnimation(R.raw.wrong)
+        pavIcon.scaleX = 1.3F
+        pavIcon.scaleY = 1.3F
+
+        initDialog()
+    }
+
+    private fun initDialog(){
+        dialog.setCancelable(false)
         dialog.create()
         dialog.show()
     }
