@@ -71,7 +71,7 @@ class MainScreenActivity : AppCompatActivity() {
             val scanner = Scanner(conexion.getInputStream())
             while (conexion.isConnected){
                 printWriter.println(nick)
-                Thread.sleep(3000)
+                Thread.sleep(2500)
                 while (scanner.hasNextLine()) {
                     val msg = scanner.nextLine()
                     if(msg.isNotEmpty()){
