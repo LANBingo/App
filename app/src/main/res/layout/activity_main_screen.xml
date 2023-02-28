@@ -1,65 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.MainScreenActivity">
 
-    <EditText
-        android:id="@+id/etUsername"
-        android:layout_width="220dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="46dp"
-        android:autofillHints="Juan"
-        android:hint="@string/userName"
-        android:textColorHint="#000000"
-        android:inputType="text"
-        android:maxLength="12"
-        app:layout_constraintBottom_toTopOf="@+id/btBegin90"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.834" />
-
-    <TextView
-        android:id="@+id/tvNcartones"
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/tabLayout"
+        layout="@layout/tab_layout"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:text="@string/nCartones"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btBegin90"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUsername"
-        app:layout_constraintVertical_bias="0.28" />
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/viewPager"/>
 
-    <androidx.appcompat.widget.AppCompatSeekBar
-        android:id="@+id/sbNcartones"
-        android:layout_width="0dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="16dp"
-        android:max="5"
-        app:layout_constraintBottom_toTopOf="@+id/btBegin90"
-        app:layout_constraintEnd_toEndOf="@+id/tvNcartones"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/tvNcartones"
-        app:layout_constraintTop_toBottomOf="@+id/tvNcartones"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Button
-        android:id="@+id/btBegin90"
-        android:layout_width="wrap_content"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/bingo90"
-        app:cornerRadius="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.607" />
+        android:layout_centerInParent="true"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

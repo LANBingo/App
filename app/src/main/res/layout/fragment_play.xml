@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.PlayFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="220dp"
+            android:layout_height="50dp"
+            android:layout_margin="16dp"
+            android:autofillHints="Juan"
+            android:hint="@string/userName"
+            android:textColorHint="#000000"
+            android:inputType="text"
+            android:maxLength="12"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/tvNcartones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nCartones"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:layout_below="@id/etUsername"
+            android:layout_centerHorizontal="true"/>
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/sbNcartones"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="16dp"
+            android:max="5"
+            android:layout_below="@id/tvNcartones"
+            android:layout_alignStart="@id/tvNcartones"
+            android:layout_alignEnd="@id/tvNcartones"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:id="@+id/btBegin90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bingo90"
+            app:cornerRadius="15dp"
+            android:layout_below="@id/sbNcartones"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+</FrameLayout>

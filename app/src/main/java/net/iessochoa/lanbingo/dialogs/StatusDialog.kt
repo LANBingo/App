@@ -6,7 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.widget.ImageView
 import android.widget.TextView
-import net.iessochoa.lanbingo.GameActivity
+import net.iessochoa.lanbingo.main.GameActivity
 import net.iessochoa.lanbingo.R
 import net.iessochoa.lanbingo.main.MainScreenActivity
 

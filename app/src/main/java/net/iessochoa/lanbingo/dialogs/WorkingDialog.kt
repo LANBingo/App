@@ -11,18 +11,14 @@ import net.iessochoa.lanbingo.R
 //Clase creada para mostrar animaciones de espera y verificación al usuario para hacer la app
 //más vistosa.
 //Creada por Juan Antonio Nicolás
-class WorkingDialog(private val context: Context) {
+class WorkingDialog {
 
-    private var dialog: Dialog
-
-    init {
-        dialog = Dialog(context)
-        dialog.setContentView(R.layout.dialog_loading)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-    }
+    private lateinit var dialog: Dialog
 
     fun changeContext(context: Context){
         dialog = Dialog(context)
+        dialog.setContentView(R.layout.dialog_loading)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
     fun showLoadingDialog(){
@@ -48,10 +44,6 @@ class WorkingDialog(private val context: Context) {
     }
 
     fun showCheckingDialog(){
-        dialog = Dialog(context)
-        dialog.setContentView(R.layout.dialog_loading)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         val tvLoading: TextView = dialog.findViewById(R.id.tvMessage)
         tvLoading.setText(R.string.checking)
         tvLoading.textSize = 15F
@@ -64,10 +56,6 @@ class WorkingDialog(private val context: Context) {
     }
 
     fun showCorrectDialog(title: String){
-        dialog = Dialog(context)
-        dialog.setContentView(R.layout.dialog_loading)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         val tvLoading: TextView = dialog.findViewById(R.id.tvMessage)
         tvLoading.text = title
         tvLoading.textSize = 14F
@@ -81,10 +69,6 @@ class WorkingDialog(private val context: Context) {
     }
 
     fun showWrongDialog(title: String){
-        dialog = Dialog(context)
-        dialog.setContentView(R.layout.dialog_loading)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         val tvLoading: TextView = dialog.findViewById(R.id.tvMessage)
         tvLoading.text = title
         tvLoading.textSize = 14F

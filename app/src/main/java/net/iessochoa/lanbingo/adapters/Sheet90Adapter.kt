@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ToggleButton
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
-import net.iessochoa.lanbingo.GameActivity.Companion.bingo
+import net.iessochoa.lanbingo.main.GameActivity.Companion.bingo
 import net.iessochoa.lanbingo.R
 import net.iessochoa.lanbingo.databinding.Bingo90sheetBinding
 

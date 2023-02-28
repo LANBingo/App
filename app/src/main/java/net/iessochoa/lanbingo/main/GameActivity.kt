@@ -1,4 +1,4 @@
-package net.iessochoa.lanbingo
+package net.iessochoa.lanbingo.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import net.iessochoa.lanbingo.adapters.Sheet90Adapter
 import net.iessochoa.lanbingo.databinding.ActivityGameBinding
 import net.iessochoa.lanbingo.dialogs.StatusDialog
-import net.iessochoa.lanbingo.dialogs.WorkingDialog
+import net.iessochoa.lanbingo.main.MainScreenActivity.Companion.workingDialog
 import net.iessochoa.lanbingo.viewmodels.Bingo90ViewModel
 
 class GameActivity : AppCompatActivity() {
@@ -22,9 +22,6 @@ class GameActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGameBinding
 
-    // Objeto que muestra diálogos con animaciones al usuario para una app más vistosa
-    private lateinit var workingDialog: WorkingDialog
-
     // Creamos un objeto del ViewModel para poder acceder a los cartones generados
     private val model: Bingo90ViewModel by viewModels()
 
@@ -32,11 +29,13 @@ class GameActivity : AppCompatActivity() {
     private lateinit var sheetAdapter: Sheet90Adapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        workingDialog.hideDialog()
+        workingDialog.changeContext(this)
+
         super.onCreate(savedInstanceState)
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        workingDialog = WorkingDialog(this)
         sheetAdapter = model.getAdapter()
 
         binding.btStatus.setOnClickListener{
@@ -115,7 +114,7 @@ class GameActivity : AppCompatActivity() {
                         workingDialog.showCorrectDialog("Bingo Correcto!")
                         Handler(Looper.getMainLooper()).postDelayed({
                             workingDialog.hideDialog()
-                            points+=3
+                            points +=3
                         }, 2500)
                     } else {
                         workingDialog.showWrongDialog("Bingo Incorrecto!")
