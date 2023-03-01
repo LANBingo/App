@@ -111,8 +111,8 @@ class GameActivity : AppCompatActivity() {
                         if (sc.nextBoolean()) {
                             workingDialog.hideDialog()
                             result = true
-                            points++
-                            workingDialog.showCorrectDialog("Linea Correcta!")
+                            points+3
+                            workingDialog.showCorrectDialog("Bingo Correcto!")
                             Handler(Looper.getMainLooper()).postDelayed({
                                 workingDialog.hideDialog()
                             }, 2500)
@@ -120,7 +120,7 @@ class GameActivity : AppCompatActivity() {
                         } else {
                             workingDialog.hideDialog()
                             strikes++
-                            workingDialog.showWrongDialog("Linea Incorrecta!")
+                            workingDialog.showWrongDialog("Bingo Incorrecto!")
                             Handler(Looper.getMainLooper()).postDelayed({
                                 workingDialog.hideDialog()
                             }, 2500)
