@@ -16,6 +16,7 @@ import net.iessochoa.lanbingo.main.MainScreenActivity.Companion.workingDialog
 import net.iessochoa.lanbingo.viewmodels.Bingo90ViewModel
 import java.io.PrintWriter
 import java.util.Scanner
+import java.util.concurrent.Executors
 
 class GameActivity : AppCompatActivity() {
     //Una variable estática que permitirá al adaptador saber en qué fase se encuentra la partida.
@@ -70,33 +71,36 @@ class GameActivity : AppCompatActivity() {
             //Este método se encargará de enviar una línea concreta al servidor para su verificación.
             override fun sendLineForCheck(carton: List<IntArray>, line: Int): Boolean {
                 workingDialog.showCheckingDialog()
-                val pw = PrintWriter(conexion.getOutputStream())
-                val sc = Scanner(conexion.getInputStream())
                 var result = false
-                pw.println(carton[line - 1].toString())
-                while (conexion.isConnected) {
-                    if (sc.hasNextBoolean()){
-                        if (sc.nextBoolean()) {
-                            workingDialog.hideDialog()
-                            result = true
-                            points++
-                            workingDialog.showCorrectDialog("Linea Correcta!")
-                            Handler(Looper.getMainLooper()).postDelayed({
+                Executors.newSingleThreadExecutor().execute {
+                    val pw = PrintWriter(conexion.getOutputStream())
+                    val sc = Scanner(conexion.getInputStream())
+                    pw.println(carton[line - 1].toString())
+                    while (conexion.isConnected) {
+                        if (sc.hasNextBoolean()){
+                            if (sc.nextBoolean()) {
                                 workingDialog.hideDialog()
-                            }, 2500)
-                            break
-                        } else {
-                            workingDialog.hideDialog()
-                            strikes++
-                            workingDialog.showWrongDialog("Linea Incorrecta!")
-                            Handler(Looper.getMainLooper()).postDelayed({
+                                points++
+                                result = true
+                                workingDialog.showCorrectDialog("Linea Correcta!")
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    workingDialog.hideDialog()
+                                }, 2500)
+                                break
+                            } else {
                                 workingDialog.hideDialog()
-                            }, 2500)
-                            break
+                                strikes++
+                                workingDialog.showWrongDialog("Linea Incorrecta!")
+                                Handler(Looper.getMainLooper()).postDelayed({
+                                    workingDialog.hideDialog()
+                                }, 2500)
+                                break
+                            }
                         }
                     }
+                    Log.d(TAG, carton.toString())
                 }
-                Log.d(TAG, carton.toString())
+                Thread.sleep(5000)
                 return result
             }
             // Este otro método se encargará de enviar un cartón completo para su verificación.
