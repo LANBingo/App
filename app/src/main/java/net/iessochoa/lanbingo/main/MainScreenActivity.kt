@@ -28,17 +28,17 @@ import java.util.concurrent.Executors
 class MainScreenActivity : AppCompatActivity()  {
     // Unas cuantas variables que deben ser accesibles desde cualquier clase:
     companion object {
-        // Variable que permitirá al ViewModel saber cuántos cartones quiere el juagdor.
+        // Variable que permitirá al ViewModel saber cuántos cartones quiere el jugador.
         var nCartones = 1
-        // Objeto que almacenará el Socket que ha conectado con el servidor
+        // Objeto que almacenará el Socket que ha conectado con el servidor.
         lateinit var conexion: Socket
-        // Variable que almacenará el nombre del jugador
+        // Variable que almacenará el nombre del jugador.
         lateinit var nick: String
-        // Variable para mostrar mensajes personalizados por el log para pruebas
+        // Variable para mostrar mensajes personalizados por el log para pruebas.
         const val TAG = "LANBingo"
-        // Objeto que muestra diálogos con animaciones al usuario para una app más vistosa
+        // Objeto que muestra diálogos con animaciones al usuario para una app más vistosa.
         lateinit var workingDialog: WorkingDialog
-        // Un método que devuelve el estado de la conexión: CONECTADO/NO_CONECTADO
+        // Un método que devuelve el estado de la conexión: CONECTADO/NO_CONECTADO.
         fun initConexion(): Boolean{
             return this::conexion.isInitialized
         }
@@ -46,7 +46,7 @@ class MainScreenActivity : AppCompatActivity()  {
 
     private lateinit var binding:ActivityMainScreenBinding
 
-    // Variables para hacer funcionar los tabs que permiten desplazarse entre los menús de Jugar y Conexión
+    // Variables para hacer funcionar los tabs que permiten desplazarse entre los menús de Jugar y Conexión.
     private lateinit var tabJugar: TextView
     private lateinit var tabConexion: TextView
     private lateinit var select: TextView
@@ -57,7 +57,7 @@ class MainScreenActivity : AppCompatActivity()  {
         binding = ActivityMainScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Iniciamos el diálogo y le establecemos el contexto de esta activity
+        // Iniciamos el diálogo y le establecemos el contexto de esta activity.
         workingDialog = WorkingDialog()
         workingDialog.changeContext(this)
 
@@ -67,18 +67,18 @@ class MainScreenActivity : AppCompatActivity()  {
         val adapter = TabPageAdapter(this, 2)
         binding.viewPager.adapter = adapter
 
-        // Iniciamos los elementos implicados en la funcionalidad de los Tabs
+        // Iniciamos los elementos implicados en la funcionalidad de los Tabs.
         tabJugar = findViewById(R.id.tabJugar)
         tabConexion = findViewById(R.id.tabConexion)
         select = findViewById(R.id.select)
         def = tabConexion.textColors
 
         /* Iniciamos los clickListener de los elementos del Tab para que cuando se pulse sobre ellos
-        el menú mostrado cambie */
+        el menú mostrado cambie. */
         tabJugar.setOnClickListener{changeState(it)}
         tabConexion.setOnClickListener{changeState(it)}
 
-        // Este método permite que el usuario sea capaz de cambiar los menús al deslizar
+        // Este método permite que el usuario sea capaz de cambiar los menús al deslizar.
         binding.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 when (position) {
@@ -90,7 +90,9 @@ class MainScreenActivity : AppCompatActivity()  {
         })
     }
 
-    // Y este otro método implicado en los Tab
+    /* Y este otro método implicado en los Tab se encarga de cambiar las ventanas si se pulsa en
+    los tabs, además de ejecutar la animación del TabMenu que simula el cambio y de iniciar los
+    componentes de los fragmentos.*/
     private fun changeState(view: View){
         if(view.id == R.id.tabJugar){
             binding.viewPager.currentItem = 0
@@ -112,6 +114,9 @@ class MainScreenActivity : AppCompatActivity()  {
         }
     }
 
+    /* Este método se encarga de inicializar los componentes del fragment Jugar, el cuál se usa para
+    alamcenar el nick y los cartones solicitados por el jugador, además de llamar al método que
+    envía el nick al servidor.*/
     private fun initPlayFragment(){
         val btBegin90:Button = findViewById(R.id.btBegin90)
         val etUsername:EditText = findViewById(R.id.etUsername)
@@ -124,11 +129,18 @@ class MainScreenActivity : AppCompatActivity()  {
                 return@setOnClickListener
             }
             workingDialog.showLoadingDialog()
+            if(etUsername.text.isEmpty()){
+                Toast.makeText(this, "Necesitas un nombre para poder jugar", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             nick = etUsername.text.toString()
             connectWithServer()
         }
     }
 
+    /* Este método de aquí se encarga de iniciar los componentes del fragmento Conexión, encargado
+     de comprobar si las credenciales de conexión pasadas por el usuario sirven para establecer
+     una conexión y llama al método para ello.*/
     private fun initConnectionFragment(){
         val btTryConexion:Button = findViewById(R.id.btTryConexion)
         val etAddress:EditText = findViewById(R.id.etAddress)
@@ -148,7 +160,7 @@ class MainScreenActivity : AppCompatActivity()  {
         }
     }
 
-    /*Método encargado de corroborar que la conexión al servidor se realice correctamente.*/
+    // Método encargado de corroborar que la conexión al servidor se realice correctamente.
     private fun tryConnection(address: String, port: Int){
         Executors.newSingleThreadExecutor().execute {
             try{
@@ -165,24 +177,20 @@ class MainScreenActivity : AppCompatActivity()  {
         }, 500)
     }
 
-    //Método que se encarga de enviar el nick del jugador al servidor para registrarlo.
+    /* Método que se encarga de enviar el nick del jugador al servidor para registrarlo, además de
+     iniciar el juego aquí en la app.*/
     private fun connectWithServer(){
-        /*Handler(Looper.getMainLooper()).postDelayed({
-            workingDialog.hideDialog()
-            val intent = Intent(applicationContext, GameActivity::class.java)
-            startActivity(intent)
-        }, 4000)*/
-
         Executors.newSingleThreadExecutor().execute {
             val printWriter = PrintWriter(conexion.getOutputStream(), true)
             val scanner = Scanner(conexion.getInputStream())
             printWriter.println(nick)
-            val msg = intArrayOf(1, 2, 30, 4, 5)
             while (conexion.isConnected){
-                printWriter.println(msg.contentToString())
+                if(scanner.nextBoolean())
+                    break
             }
+            workingDialog.hideDialog()
+            val intent = Intent(applicationContext, GameActivity::class.java)
+            startActivity(intent)
         }
-        //val intent = Intent(applicationContext, GameActivity::class.java)
-        //startActivity(intent)
     }
 }
