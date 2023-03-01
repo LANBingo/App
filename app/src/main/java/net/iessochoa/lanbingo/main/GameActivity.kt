@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import net.iessochoa.lanbingo.adapters.Sheet90Adapter
 import net.iessochoa.lanbingo.databinding.ActivityGameBinding
 import net.iessochoa.lanbingo.dialogs.StatusDialog
+import net.iessochoa.lanbingo.main.MainScreenActivity.Companion.conexion
 import net.iessochoa.lanbingo.main.MainScreenActivity.Companion.workingDialog
 import net.iessochoa.lanbingo.viewmodels.Bingo90ViewModel
+import java.io.PrintWriter
+import java.util.Scanner
 
 class GameActivity : AppCompatActivity() {
     //Una variable estática que permitirá al adaptador saber en qué fase se encuentra la partida.
@@ -65,42 +68,19 @@ class GameActivity : AppCompatActivity() {
             //Este método se encargará de enviar una línea concreta al servidor para su verificación.
             override fun sendLineForCheck(carton: List<IntArray>, line: Int): Boolean {
                 workingDialog.showCheckingDialog()
+                val pw = PrintWriter(conexion.getOutputStream())
+                val sc = Scanner(conexion.getInputStream())
                 var result = false
-                Handler(Looper.getMainLooper()).postDelayed({
-                    workingDialog.hideDialog()
-                    if(result){
-                        workingDialog.showCorrectDialog("Linea Correcta!")
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            workingDialog.hideDialog()
-                            points++
-                        }, 2500)
+                pw.println(carton[line - 1].toString())
+                while (conexion.isConnected) {
+                    if (sc.nextBoolean()) {
+                        result = true
+                        points++
+                        break
                     } else {
-                        workingDialog.showWrongDialog("Linea Incorrecta!")
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            workingDialog.hideDialog()
-                        }, 2500)
+                        strikes++
+                        break
                     }
-                    }, 10000)
-                result = when(line){
-                    1-> {
-                        //if(sendLine(carton[0]))
-                        true
-                        //else
-                        //false
-                    }
-                    2-> {
-                        //if(sendLine(carton[0]))
-                        true
-                        //else
-                        //false
-                    }
-                    3-> {
-                        //if(sendLine(carton[0]))
-                        true
-                        //else
-                        //false
-                    }
-                    else -> false
                 }
                 return result
             }
