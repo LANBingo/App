@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import net.iessochoa.lanbingo.main.GameActivity.Companion.bingo
 import net.iessochoa.lanbingo.R
 import net.iessochoa.lanbingo.databinding.Bingo90sheetBinding
+import java.util.concurrent.Executors
 
 // Clase Creada para estilizar e inicializar el RecyclerView, además de para contener los métodos
 // que se activan gracias a la interacción con los cartones
@@ -190,14 +191,16 @@ class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) :
                 // aquí debido a que el metodo al que llama usa la lista que utilizamos con este with
                 // para asignar los numeros del carton
                 binding.btCall.setOnClickListener{
-                    if(!bingo){
-                        if(onCallListener.sendLineForCheck(this, findLine(pos))) {
-                            bingo = true
-                            binding.btCall.setText(R.string.bingo)
-                            it.visibility = View.INVISIBLE
+                    Executors.newSingleThreadExecutor().execute {
+                        if(!bingo){
+                            if(onCallListener.sendLineForCheck(this, findLine(pos))) {
+                                bingo = true
+                                binding.btCall.setText(R.string.bingo)
+                                it.visibility = View.INVISIBLE
+                            }
+                        } else {
+                            onCallListener.sendBingoForCheck(this)
                         }
-                    } else {
-                        onCallListener.sendBingoForCheck(this)
                     }
                 }
             }

@@ -72,7 +72,6 @@ class GameActivity : AppCompatActivity() {
             override fun sendLineForCheck(carton: List<IntArray>, line: Int): Boolean {
                 workingDialog.showCheckingDialog()
                 var result = 3
-                Executors.newSingleThreadExecutor().execute {
                     val pw = PrintWriter(conexion.getOutputStream())
                     val sc = Scanner(conexion.getInputStream())
                     pw.println(carton[line - 1].toString())
@@ -99,7 +98,6 @@ class GameActivity : AppCompatActivity() {
                             }
                         }
                     }
-                }
                 Log.d(TAG, carton.toString())
                 while(result == 3){}
                 return result == 1
