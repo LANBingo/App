@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -21,7 +22,7 @@ import net.iessochoa.lanbingo.dialogs.*
 import java.io.PrintWriter
 import java.net.ConnectException
 import java.net.Socket
-import java.util.Scanner
+import java.util.*
 import java.util.concurrent.Executors
 
 class MainScreenActivity : AppCompatActivity()  {
@@ -37,7 +38,7 @@ class MainScreenActivity : AppCompatActivity()  {
         const val TAG = "LANBingo"
         // Objeto que muestra diálogos con animaciones al usuario para una app más vistosa
         lateinit var workingDialog: WorkingDialog
-
+        // Un método que devuelve el estado de la conexión: CONECTADO/NO_CONECTADO
         fun initConexion(): Boolean{
             return this::conexion.isInitialized
         }
@@ -45,6 +46,7 @@ class MainScreenActivity : AppCompatActivity()  {
 
     private lateinit var binding:ActivityMainScreenBinding
 
+    // Variables para hacer funcionar los tabs que permiten desplazarse entre los menús de Jugar y Conexión
     private lateinit var tabJugar: TextView
     private lateinit var tabConexion: TextView
     private lateinit var select: TextView
@@ -55,20 +57,28 @@ class MainScreenActivity : AppCompatActivity()  {
         binding = ActivityMainScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Iniciamos el diálogo y le establecemos el contexto de esta activity
         workingDialog = WorkingDialog()
         workingDialog.changeContext(this)
 
+        /* Iniciamos el adaptador para el PageViewer y se lo asignamos al PageViewer de esta
+        activity. Este adaptador no es muy necesario para funcionalidad, es más cosmético ya que
+        permite al usuario cambiar entre menús deslizando a un lado u otro la pantalla.*/
         val adapter = TabPageAdapter(this, 2)
         binding.viewPager.adapter = adapter
 
+        // Iniciamos los elementos implicados en la funcionalidad de los Tabs
         tabJugar = findViewById(R.id.tabJugar)
         tabConexion = findViewById(R.id.tabConexion)
         select = findViewById(R.id.select)
         def = tabConexion.textColors
 
+        /* Iniciamos los clickListener de los elementos del Tab para que cuando se pulse sobre ellos
+        el menú mostrado cambie */
         tabJugar.setOnClickListener{changeState(it)}
         tabConexion.setOnClickListener{changeState(it)}
 
+        // Este método permite que el usuario sea capaz de cambiar los menús al deslizar
         binding.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 when (position) {
@@ -80,6 +90,7 @@ class MainScreenActivity : AppCompatActivity()  {
         })
     }
 
+    // Y este otro método implicado en los Tab
     private fun changeState(view: View){
         if(view.id == R.id.tabJugar){
             binding.viewPager.currentItem = 0
@@ -130,7 +141,10 @@ class MainScreenActivity : AppCompatActivity()  {
             }
             val address = etAddress.text.toString()
             val port = Integer.parseInt(etPort.text.toString())
-            tryConnection(address,port)
+            if(Patterns.IP_ADDRESS.matcher(address).matches())
+                tryConnection(address,port)
+            else
+                Toast.makeText(this, "La IP introducida no es válida", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -140,12 +154,15 @@ class MainScreenActivity : AppCompatActivity()  {
             try{
                 conexion = Socket(address, port)
             }catch (e: ConnectException){
-                Toast.makeText(this, "Error, no se ha podido conectar", Toast.LENGTH_SHORT).show()
+                e.printStackTrace()
             }
         }
-        if(initConexion())
-            Toast.makeText(this, "Conexión Correcta", Toast.LENGTH_SHORT).show()
-
+        Handler(Looper.getMainLooper()).postDelayed({
+            if(initConexion())
+                Toast.makeText(this, "Conexión Correcta", Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this, "Error, no se ha podido conectar", Toast.LENGTH_SHORT).show()
+        }, 500)
     }
 
     //Método que se encarga de enviar el nick del jugador al servidor para registrarlo.
@@ -159,16 +176,10 @@ class MainScreenActivity : AppCompatActivity()  {
         Executors.newSingleThreadExecutor().execute {
             val printWriter = PrintWriter(conexion.getOutputStream(), true)
             val scanner = Scanner(conexion.getInputStream())
+            printWriter.println(nick)
+            val msg = intArrayOf(1, 2, 30, 4, 5)
             while (conexion.isConnected){
-                printWriter.println(nick)
-                Thread.sleep(2500)
-                while (scanner.hasNextLine()) {
-                    val msg = scanner.nextLine()
-                    if(msg.isNotEmpty()){
-                        Log.d(TAG, msg)
-                        break
-                    }
-                }
+                printWriter.println(msg.contentToString())
             }
         }
         //val intent = Intent(applicationContext, GameActivity::class.java)
