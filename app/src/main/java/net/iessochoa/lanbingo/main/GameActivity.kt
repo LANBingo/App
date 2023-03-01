@@ -75,23 +75,25 @@ class GameActivity : AppCompatActivity() {
                 var result = false
                 pw.println(carton[line - 1].toString())
                 while (conexion.isConnected) {
-                    if (sc.nextBoolean()) {
-                        workingDialog.hideDialog()
-                        result = true
-                        points++
-                        workingDialog.showCorrectDialog("Linea Correcta!")
-                        Handler(Looper.getMainLooper()).postDelayed({
+                    if (sc.hasNextBoolean()){
+                        if (sc.nextBoolean()) {
                             workingDialog.hideDialog()
-                        }, 2500)
-                        break
-                    } else {
-                        workingDialog.hideDialog()
-                        strikes++
-                        workingDialog.showWrongDialog("Linea Incorrecta!")
-                        Handler(Looper.getMainLooper()).postDelayed({
+                            result = true
+                            points++
+                            workingDialog.showCorrectDialog("Linea Correcta!")
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                workingDialog.hideDialog()
+                            }, 2500)
+                            break
+                        } else {
                             workingDialog.hideDialog()
-                        }, 2500)
-                        break
+                            strikes++
+                            workingDialog.showWrongDialog("Linea Incorrecta!")
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                workingDialog.hideDialog()
+                            }, 2500)
+                            break
+                        }
                     }
                 }
                 Log.d(TAG, carton.toString())
@@ -105,23 +107,25 @@ class GameActivity : AppCompatActivity() {
                 var result = false
                 pw.println(carton.toString())
                 while (conexion.isConnected) {
-                    if (sc.nextBoolean()) {
-                        workingDialog.hideDialog()
-                        result = true
-                        points++
-                        workingDialog.showCorrectDialog("Linea Correcta!")
-                        Handler(Looper.getMainLooper()).postDelayed({
+                    if (sc.hasNextBoolean()){
+                        if (sc.nextBoolean()) {
                             workingDialog.hideDialog()
-                        }, 2500)
-                        break
-                    } else {
-                        workingDialog.hideDialog()
-                        strikes++
-                        workingDialog.showWrongDialog("Linea Incorrecta!")
-                        Handler(Looper.getMainLooper()).postDelayed({
+                            result = true
+                            points++
+                            workingDialog.showCorrectDialog("Linea Correcta!")
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                workingDialog.hideDialog()
+                            }, 2500)
+                            break
+                        } else {
                             workingDialog.hideDialog()
-                        }, 2500)
-                        break
+                            strikes++
+                            workingDialog.showWrongDialog("Linea Incorrecta!")
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                workingDialog.hideDialog()
+                            }, 2500)
+                            break
+                        }
                     }
                 }
                 return result
