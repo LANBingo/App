@@ -71,7 +71,7 @@ class GameActivity : AppCompatActivity() {
             //Este método se encargará de enviar una línea concreta al servidor para su verificación.
             override fun sendLineForCheck(carton: List<IntArray>, line: Int): Boolean {
                 workingDialog.showCheckingDialog()
-                var result = false
+                var result = 3
                 Executors.newSingleThreadExecutor().execute {
                     val pw = PrintWriter(conexion.getOutputStream())
                     val sc = Scanner(conexion.getInputStream())
@@ -81,7 +81,7 @@ class GameActivity : AppCompatActivity() {
                             if (sc.nextBoolean()) {
                                 workingDialog.hideDialog()
                                 points++
-                                result = true
+                                result = 1
                                 workingDialog.showCorrectDialog("Linea Correcta!")
                                 Handler(Looper.getMainLooper()).postDelayed({
                                     workingDialog.hideDialog()
@@ -90,6 +90,7 @@ class GameActivity : AppCompatActivity() {
                             } else {
                                 workingDialog.hideDialog()
                                 strikes++
+                                result = 2
                                 workingDialog.showWrongDialog("Linea Incorrecta!")
                                 Handler(Looper.getMainLooper()).postDelayed({
                                     workingDialog.hideDialog()
@@ -98,10 +99,10 @@ class GameActivity : AppCompatActivity() {
                             }
                         }
                     }
-                    Log.d(TAG, carton.toString())
                 }
-                Thread.sleep(5000)
-                return result
+                Log.d(TAG, carton.toString())
+                while(result == 3){}
+                return result == 1
             }
             // Este otro método se encargará de enviar un cartón completo para su verificación.
             override fun sendBingoForCheck(carton: List<IntArray>): Boolean {
