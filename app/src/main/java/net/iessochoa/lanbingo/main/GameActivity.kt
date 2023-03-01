@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
+import android.widget.ToggleButton
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import net.iessochoa.lanbingo.R
 import net.iessochoa.lanbingo.adapters.Sheet90Adapter
 import net.iessochoa.lanbingo.databinding.ActivityGameBinding
 import net.iessochoa.lanbingo.dialogs.StatusDialog
@@ -69,9 +72,9 @@ class GameActivity : AppCompatActivity() {
         sheetAdapter.onCallListener = object:
         Sheet90Adapter.OnCallListener {
             //Este método se encargará de enviar una línea concreta al servidor para su verificación.
-            override fun sendLineForCheck(carton: List<IntArray>, line: Int): Boolean {
+            override fun sendLineForCheck(carton: List<IntArray>, line: Int, view: ToggleButton) {
                 workingDialog.showCheckingDialog()
-                var result = 3
+                Executors.newSingleThreadExecutor().execute {
                     val pw = PrintWriter(conexion.getOutputStream())
                     val sc = Scanner(conexion.getInputStream())
                     pw.println(carton[line - 1].toString())
@@ -80,7 +83,9 @@ class GameActivity : AppCompatActivity() {
                             if (sc.nextBoolean()) {
                                 workingDialog.hideDialog()
                                 points++
-                                result = 1
+                                bingo = true
+                                view.setText(R.string.bingo)
+                                view.visibility = View.INVISIBLE
                                 workingDialog.showCorrectDialog("Linea Correcta!")
                                 Handler(Looper.getMainLooper()).postDelayed({
                                     workingDialog.hideDialog()
@@ -89,7 +94,6 @@ class GameActivity : AppCompatActivity() {
                             } else {
                                 workingDialog.hideDialog()
                                 strikes++
-                                result = 2
                                 workingDialog.showWrongDialog("Linea Incorrecta!")
                                 Handler(Looper.getMainLooper()).postDelayed({
                                     workingDialog.hideDialog()
@@ -98,22 +102,20 @@ class GameActivity : AppCompatActivity() {
                             }
                         }
                     }
+                }
                 Log.d(TAG, carton.toString())
-                while(result == 3){}
-                return result == 1
             }
             // Este otro método se encargará de enviar un cartón completo para su verificación.
-            override fun sendBingoForCheck(carton: List<IntArray>): Boolean {
+            override fun sendBingoForCheck(carton: List<IntArray>, view: ToggleButton) {
                 workingDialog.showCheckingDialog()
                 val pw = PrintWriter(conexion.getOutputStream())
                 val sc = Scanner(conexion.getInputStream())
-                var result = false
                 pw.println(carton.toString())
                 while (conexion.isConnected) {
                     if (sc.hasNextBoolean()){
                         if (sc.nextBoolean()) {
                             workingDialog.hideDialog()
-                            result = true
+
                             points+3
                             workingDialog.showCorrectDialog("Bingo Correcto!")
                             Handler(Looper.getMainLooper()).postDelayed({
@@ -131,7 +133,6 @@ class GameActivity : AppCompatActivity() {
                         }
                     }
                 }
-                return result
             }
         }
     }

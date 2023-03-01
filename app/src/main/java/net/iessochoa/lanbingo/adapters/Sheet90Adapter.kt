@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import net.iessochoa.lanbingo.main.GameActivity.Companion.bingo
 import net.iessochoa.lanbingo.R
 import net.iessochoa.lanbingo.databinding.Bingo90sheetBinding
-import java.util.concurrent.Executors
 
 // Clase Creada para estilizar e inicializar el RecyclerView, además de para contener los métodos
 // que se activan gracias a la interacción con los cartones
@@ -191,17 +190,11 @@ class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) :
                 // aquí debido a que el metodo al que llama usa la lista que utilizamos con este with
                 // para asignar los numeros del carton
                 binding.btCall.setOnClickListener{
-                    Executors.newSingleThreadExecutor().execute {
-                        if(!bingo){
-                            if(onCallListener.sendLineForCheck(this, findLine(pos))) {
-                                bingo = true
-                                binding.btCall.setText(R.string.bingo)
-                                it.visibility = View.INVISIBLE
-                            }
-                        } else {
-                            onCallListener.sendBingoForCheck(this)
-                        }
-                    }
+                    if(!bingo)
+                        onCallListener.sendLineForCheck(this, findLine(pos), it as ToggleButton)
+                    else
+                        onCallListener.sendBingoForCheck(this, it as ToggleButton)
+
                 }
             }
             /*Cogemos la lista de estados y la aplicamos a los ToggleButton. De esta manera,
@@ -325,8 +318,8 @@ class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) :
     /*Interfaz creada para poder enviar al servidor, a través de 2 métodos distintos, listas
     de integer que deben comprobarse.*/
     interface OnCallListener{
-        fun sendLineForCheck(carton:List<IntArray>, line:Int): Boolean
+        fun sendLineForCheck(carton:List<IntArray>, line:Int, view: ToggleButton)
 
-        fun sendBingoForCheck(carton: List<IntArray>): Boolean
+        fun sendBingoForCheck(carton: List<IntArray>, view: ToggleButton)
     }
 }
