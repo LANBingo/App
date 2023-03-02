@@ -57,6 +57,9 @@ class MainScreenActivity : AppCompatActivity()  {
         binding = ActivityMainScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        if(intent.hasExtra("Expulsado"))
+            Toast.makeText(this, "Se te ha expulsado del juego por acomular muchos strikes!", Toast.LENGTH_LONG).show()
+
         // Iniciamos el diálogo y le establecemos el contexto de esta activity.
         workingDialog = WorkingDialog()
         workingDialog.changeContext(this)

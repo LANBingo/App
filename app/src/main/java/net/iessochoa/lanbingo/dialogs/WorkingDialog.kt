@@ -35,12 +35,22 @@ class WorkingDialog {
         initDialog()
     }
 
-    fun showGeneratingDialog(){
+    /*fun showGeneratingDialog(){
 
-    }
+    }*/
 
     fun showWaitDialog(){
+        val tvLoading: TextView = dialog.findViewById(R.id.tvMessage)
+        tvLoading.setText(R.string.wait)
+        tvLoading.textSize = 15F
 
+        val pavIcon: LottieAnimationView = dialog.findViewById(R.id.pavIcon)
+        pavIcon.setAnimation(R.raw.checking)
+        pavIcon.repeatCount = LottieDrawable.INFINITE
+        pavIcon.scaleX = 1F
+        pavIcon.scaleY = 1F
+
+        initDialog()
     }
 
     fun showCheckingDialog(){
@@ -51,6 +61,8 @@ class WorkingDialog {
         val pavIcon: LottieAnimationView = dialog.findViewById(R.id.pavIcon)
         pavIcon.setAnimation(R.raw.checking)
         pavIcon.repeatCount = LottieDrawable.INFINITE
+        pavIcon.scaleX = 1F
+        pavIcon.scaleY = 1F
 
         initDialog()
     }
@@ -64,6 +76,7 @@ class WorkingDialog {
         pavIcon.setAnimation(R.raw.correct)
         pavIcon.scaleX = 1.3F
         pavIcon.scaleY = 1.3F
+        pavIcon.repeatCount = 1
 
         initDialog()
     }
@@ -75,6 +88,7 @@ class WorkingDialog {
 
         val pavIcon: LottieAnimationView = dialog.findViewById(R.id.pavIcon)
         pavIcon.setAnimation(R.raw.wrong)
+        pavIcon.repeatCount = 1
         pavIcon.scaleX = 1.3F
         pavIcon.scaleY = 1.3F
 

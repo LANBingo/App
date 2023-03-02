@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ToggleButton
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
@@ -191,9 +192,9 @@ class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) :
                 // para asignar los numeros del carton
                 binding.btCall.setOnClickListener{
                     if(!bingo)
-                        onCallListener.sendLineForCheck(this, findLine(pos), it as ToggleButton)
+                        onCallListener.sendLineForCheck(this, findLine(pos), it as Button)
                     else
-                        onCallListener.sendBingoForCheck(this, it as ToggleButton)
+                        onCallListener.sendBingoForCheck(this)
 
                 }
             }
@@ -282,9 +283,11 @@ class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) :
                         cell++
                 }
                 if (cell == 9){
-                    if(bingo)
+                    if(bingo) {
                         lines++
-                    else {
+                        if(binding.btCall.text.equals(R.string.linea))
+                            binding.btCall.setText(R.string.bingo)
+                    } else {
                         binding.btCall.visibility = View.VISIBLE
                         return
                     }
@@ -318,8 +321,8 @@ class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) :
     /*Interfaz creada para poder enviar al servidor, a través de 2 métodos distintos, listas
     de integer que deben comprobarse.*/
     interface OnCallListener{
-        fun sendLineForCheck(carton:List<IntArray>, line:Int, view: ToggleButton)
+        fun sendLineForCheck(carton:List<IntArray>, line:Int, view: Button)
 
-        fun sendBingoForCheck(carton: List<IntArray>, view: ToggleButton)
+        fun sendBingoForCheck(carton: List<IntArray>)
     }
 }

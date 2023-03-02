@@ -9,6 +9,7 @@
     <string name="userName">Nombre</string>
     <string name="loading">Cargando…</string>
     <string name="checking">Comprobando…</string>
+    <string name="wait">Espera…</string>
     <string name="status">Status</string>
     <string name="points">Puntos</string>
     <string name="strikes">Strikes</string>

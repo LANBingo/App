@@ -1,49 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.ConnectionFragment">
+    tools:context=".fragments.ConnectionFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/etAddress"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:autofillHints="Juan"
+        android:hint="@string/ip"
+        android:textColorHint="#000000"
+        android:inputType="text"
+        android:maxLength="15"
+        android:layout_centerHorizontal="true" />
 
-        <EditText
-            android:id="@+id/etAddress"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:autofillHints="Juan"
-            android:hint="@string/ip"
-            android:textColorHint="#000000"
-            android:inputType="text"
-            android:maxLength="12"
-            android:layout_centerHorizontal="true" />
+    <EditText
+        android:id="@+id/etPort"
+        android:layout_width="220dp"
+        android:layout_height="50dp"
+        android:autofillHints="Juan"
+        android:hint="@string/port"
+        android:textColorHint="#000000"
+        android:inputType="number"
+        android:maxLength="5"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/etAddress"/>
 
-        <EditText
-            android:id="@+id/etPort"
-            android:layout_width="220dp"
-            android:layout_height="50dp"
-            android:autofillHints="Juan"
-            android:hint="@string/port"
-            android:textColorHint="#000000"
-            android:inputType="number"
-            android:maxLength="5"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/etAddress"/>
+    <Button
+        android:id="@+id/btTryConexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="@string/try_connect"
+        app:cornerRadius="15dp"
+        android:layout_below="@id/etPort"
+        android:layout_centerHorizontal="true" />
 
-        <Button
-            android:id="@+id/btTryConexion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/try_connect"
-            app:cornerRadius="15dp"
-            android:layout_below="@id/etPort"
-            android:layout_centerHorizontal="true" />
-
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>
