@@ -132,7 +132,8 @@ class Bingo90ViewModel : ViewModel() {
         return sheetAdapter
     }
 
-    /**/
+    /* Con este método generamos los estados iniciales del cartón que nos servirán para evitar que
+     se reinicien con tan solo girar la pantalla*/
     private fun generaEstados(sheets: Int){
         for (i in 1 .. sheets){
             val status = BooleanArray(27)

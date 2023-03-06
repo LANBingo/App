@@ -1,4 +1,4 @@
-package net.iessochoa.lanbingo.main
+package net.iessochoa.lanbingo.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

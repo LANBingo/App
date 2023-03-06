@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Button
@@ -17,6 +16,7 @@ import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import net.iessochoa.lanbingo.R
+import net.iessochoa.lanbingo.adapters.TabPageAdapter
 import net.iessochoa.lanbingo.databinding.ActivityMainScreenBinding
 import net.iessochoa.lanbingo.dialogs.*
 import java.io.PrintWriter
@@ -40,7 +40,7 @@ class MainScreenActivity : AppCompatActivity()  {
         lateinit var workingDialog: WorkingDialog
         // Un método que devuelve el estado de la conexión: CONECTADO/NO_CONECTADO.
         fun initConexion(): Boolean{
-            return this::conexion.isInitialized
+            return this::conexion.isInitialized && conexion.isConnected
         }
     }
 
@@ -125,7 +125,6 @@ class MainScreenActivity : AppCompatActivity()  {
         val etUsername:EditText = findViewById(R.id.etUsername)
 
         btBegin90.setOnClickListener{
-            Log.d(TAG, "PRUEBA DE TAG")
             if(!initConexion()) {
                 Snackbar.make(binding.root, "No se ha establecido ninguna conexión!",
                     Snackbar.LENGTH_LONG).setAction("ESTABLECER"){changeState(tabConexion)}.show()
@@ -147,27 +146,34 @@ class MainScreenActivity : AppCompatActivity()  {
     private fun initConnectionFragment(){
         val btTryConexion:Button = findViewById(R.id.btTryConexion)
         val etAddress:EditText = findViewById(R.id.etAddress)
-        val etPort:EditText = findViewById(R.id.etPort)
+        val etPass:EditText = findViewById(R.id.etPass)
 
         btTryConexion.setOnClickListener{
-            if(etAddress.text.isEmpty() || etPort.text.isEmpty()){
+            if(etAddress.text.isEmpty() || etPass.text.isEmpty()){
                 Toast.makeText(this, "Completa Todos los Campos!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             val address = etAddress.text.toString()
-            val port = Integer.parseInt(etPort.text.toString())
+            val pass = CifradoNicolas.cifrador(etPass.text.toString())
             if(Patterns.IP_ADDRESS.matcher(address).matches())
-                tryConnection(address,port)
+                tryConnection(address, pass)
             else
                 Toast.makeText(this, "La IP introducida no es válida", Toast.LENGTH_SHORT).show()
         }
     }
 
     // Método encargado de corroborar que la conexión al servidor se realice correctamente.
-    private fun tryConnection(address: String, port: Int){
+    private fun tryConnection(address: String, pass: String){
         Executors.newSingleThreadExecutor().execute {
             try{
-                conexion = Socket(address, port)
+                conexion = Socket(address, 5000)
+                val pw = PrintWriter(conexion.getOutputStream())
+                pw.println(pass)
+                val sc = Scanner(conexion.getInputStream())
+                if(!sc.nextBoolean()) {
+                    conexion.close()
+                    throw ConnectException()
+                }
             }catch (e: ConnectException){
                 e.printStackTrace()
             }
@@ -177,7 +183,7 @@ class MainScreenActivity : AppCompatActivity()  {
                 Toast.makeText(this, "Conexión Correcta", Toast.LENGTH_SHORT).show()
             else
                 Toast.makeText(this, "Error, no se ha podido conectar", Toast.LENGTH_SHORT).show()
-        }, 500)
+        }, 1000)
     }
 
     /* Método que se encarga de enviar el nick del jugador al servidor para registrarlo, además de

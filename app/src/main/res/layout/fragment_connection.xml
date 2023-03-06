@@ -19,16 +19,15 @@
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:id="@+id/etPort"
+        android:id="@+id/etPass"
         android:layout_width="220dp"
         android:layout_height="50dp"
-        android:autofillHints="Juan"
-        android:hint="@string/port"
+        android:hint="@string/pass"
         android:textColorHint="#000000"
-        android:inputType="number"
-        android:maxLength="5"
+        android:inputType="text"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/etAddress"/>
+        android:layout_below="@id/etAddress"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btTryConexion"
@@ -37,7 +36,7 @@
         android:layout_margin="16dp"
         android:text="@string/try_connect"
         app:cornerRadius="15dp"
-        android:layout_below="@id/etPort"
+        android:layout_below="@id/etPass"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

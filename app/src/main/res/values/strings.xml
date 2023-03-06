@@ -9,15 +9,13 @@
     <string name="userName">Nombre</string>
     <string name="loading">Cargando…</string>
     <string name="checking">Comprobando…</string>
-    <string name="wait">Espera…</string>
+    <string name="waiting">Espera…</string>
     <string name="status">Status</string>
     <string name="points">Puntos</string>
     <string name="strikes">Strikes</string>
     <string name="jugar">Jugar</string>
     <string name="conexion">Conexión</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="try_connect">Probar Conexión</string>
-    <string name="port">Puerto</string>
+    <string name="pass">Clave de Acceso</string>
     <string name="ip">Dirección IP</string>
 </resources>

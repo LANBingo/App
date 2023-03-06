@@ -41,11 +41,11 @@ class WorkingDialog {
 
     fun showWaitDialog(){
         val tvLoading: TextView = dialog.findViewById(R.id.tvMessage)
-        tvLoading.setText(R.string.wait)
+        tvLoading.setText(R.string.waiting)
         tvLoading.textSize = 15F
 
         val pavIcon: LottieAnimationView = dialog.findViewById(R.id.pavIcon)
-        pavIcon.setAnimation(R.raw.checking)
+        pavIcon.setAnimation(R.raw.waiting)
         pavIcon.repeatCount = LottieDrawable.INFINITE
         pavIcon.scaleX = 1F
         pavIcon.scaleY = 1F

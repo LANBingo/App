@@ -15,7 +15,8 @@ import net.iessochoa.lanbingo.databinding.Bingo90sheetBinding
 // Clase Creada para estilizar e inicializar el RecyclerView, además de para contener los métodos
 // que se activan gracias a la interacción con los cartones
 // Implementación de los metodos e Inicializadores por Juan Antonio Nicolás
-class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) : RecyclerView.Adapter<Sheet90Adapter.SheetViewHolder> () {
+class Sheet90Adapter(sheets: List<List<IntArray>>, status: List<BooleanArray>) :
+    RecyclerView.Adapter<Sheet90Adapter.SheetViewHolder> () {
 
     //Una lista que contiene todos los cartones del jugador
     private val sheetList:List<List<IntArray>> = sheets
